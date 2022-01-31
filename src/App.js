@@ -29,11 +29,14 @@ function App() {
            </div>
 
             <div className="d-flex">
-                {arr.map((obj) => (
+                {arr.map((obj,index) => (
                     <Card
                         title={obj.title}
                         price={obj.price}
                         imageUrl={obj.imgUrl}
+                        onFavorite={() => console.log('Добавили в закладки')}
+                        onPlus={() => console.log('Нажали на плюс')}
+                        key={index}
                     />
                     )
                 )
