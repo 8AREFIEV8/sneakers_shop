@@ -1,16 +1,16 @@
 
-function Header() {
+function Header(props) {
     return (
         <header className="d-flex justify-between align-center p-40">
             <div className="d-flex align-center">
-                <img width={40} height={40} src="/img/logo.png.png" alt=""/>
+                <img width={40} height={40} src="/img/logo.png.png" alt="logo"/>
                 <div className="headerInfo">
                     <h3>Sneaker World</h3>
                     <p className="opacity-5">Магазин оригинальных кроссовок</p>
                 </div>
             </div>
-            <ul className="d-flex">
-                <li className="mr-30">
+            <ul className="d-flex ">
+                <li onClick={props.onClickCart} className="mr-30 cu-p">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          className="bi bi-cart3" viewBox="0 0 16 16">
                         <path
