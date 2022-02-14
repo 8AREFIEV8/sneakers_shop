@@ -36,13 +36,13 @@ function App() {
     };
 
     const onAddFavorite = (obj) => {
-        axios.delete(`https://6201422bfdf5090017249939.mockapi.io/favorites`, obj);
+        axios.post(`https://6201422bfdf5090017249939.mockapi.io/fovorites`, obj);
         setFavorites((prev) => [...prev, obj]);
-    }
+    };
 
     const onChangeSearchInput = (event) => {
         setSearchValue(event.target.value);
-    }
+    };
 
 
   return (
@@ -74,7 +74,7 @@ function App() {
                         title={item.title}
                         price={item.price}
                         imageUrl={item.imageUrl}
-                        onFavorite={ (obj) => onAddFavorite(obj)}
+                        onFavorite={(obj) => onAddFavorite(obj)}
                         onPlus={(obj) => onAddToCard(obj)}
 
                     />
