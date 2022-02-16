@@ -1,4 +1,5 @@
 
+
 function Drawer({onClose, onRemove, items = []}) {
     return (
         <div className="overlay">
@@ -36,6 +37,8 @@ function Drawer({onClose, onRemove, items = []}) {
                               }
 
                           </div>
+
+
 
                           <div className="cartTotalBlock">
 
