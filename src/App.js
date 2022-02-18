@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Card from "./components/Card/Card";
 import {Route, Switch} from "react-router-dom";
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
 
 
 
@@ -25,6 +27,9 @@ function App() {
         axios.get(`https://6201422bfdf5090017249939.mockapi.io/cart`).then(res => {
             setCartItems(res.data);
         });
+        axios.get(`https://6201422bfdf5090017249939.mockapi.io/fovorites`).then(res => {
+            setFavorites(res.data);
+        });
 
     },[])
 
@@ -40,9 +45,19 @@ function App() {
         setCartItems((prev) => prev.filter(item => item.id !== id));
     };
 
-    const onAddFavorite = (obj) => {
-        axios.post(`https://6201422bfdf5090017249939.mockapi.io/fovorites`, obj);
-        setFavorites((prev) => [...prev, obj]);
+    const onAddFavorite = async (obj) => {
+       try {
+           if (favorites.find(favObj => favObj.id === obj.id)) {
+               axios.delete(`https://6201422bfdf5090017249939.mockapi.io/fovorites/${obj.id}`);
+               // setFavorites((prev) => prev.filter(item => item.id !== obj.id));
+           }else {
+               const {data} = await axios.post(`https://6201422bfdf5090017249939.mockapi.io/fovorites`, obj);
+               setFavorites((prev) => [...prev, data]);
+
+           }
+       }catch (error) {
+           alert('Не удалось добавить в фавориты')
+       }
     };
 
     const onChangeSearchInput = (event) => {
@@ -58,53 +73,24 @@ function App() {
               <Header onClickCart={() => setCartOpened(true)}/>
 
 
-                  {/*<Route path="/test">*/}
-                  {/*    testttttttttttttt*/}
-                  {/*</Route>*/}
-                  {/* ЕТО ТЕСТОВЫЙ РОУТ, КОТОРЫЙ НЕ РАБОТАЕТ. НЕ МОГУ НАЙТИ ПРИЧИНУ*/}
+              <Route path="/" exact>
+                  <Home
+                      items={items}
+                      searchValue={searchValue}
+                      setSearchValue={setSearchValue}
+                      onChangeSearchInput={onChangeSearchInput}
+                      onAddFavorite={onAddFavorite}
+                      onAddToCard={onAddToCard}
+                  />
+              </Route>
 
+              <Route path="/favorites" exact>
+                  <Favorites
+                      items={favorites}
+                      onAddFavorite={onAddFavorite}
 
-              <div className="content p-40">
-                  <div className="d-flex align-center justify-between mb-40">
-                      <h1>{searchValue ? `Поиск по запросу: "${searchValue}"` : 'Все кроссовки'}</h1>
-                      <div className="search-block d-flex">
-                          <img src="/img/search.svg" alt="search"/>
-                          {searchValue && <img
-                              onClick={() => setSearchValue('')}
-                              className="clear cu-p"
-                              src="/img/btn-remove.svg"
-                              alt="clear"/>}
-                          <input onChange={onChangeSearchInput} value={searchValue} placeholder="Поиск ..."/>
-
-                      </div>
-                  </div>
-
-                  <div className="d-flex flex-wrap">
-                      {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-                          .map((item, index) => (
-                                  <Card
-                                      key={index}
-                                      title={item.title}
-                                      price={item.price}
-                                      imageUrl={item.imageUrl}
-                                      onFavorite={(obj) => onAddFavorite(obj)}
-                                      onPlus={(obj) => onAddToCard(obj)}
-
-                                  />
-                              )
-                          )
-                      }
-                  </div>
-
-              </div>
-
-
-
-
-
-
-
-
+                  />
+              </Route>
 
           </div>
 
