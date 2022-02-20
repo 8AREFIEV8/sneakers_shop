@@ -21,17 +21,16 @@ function App() {
 
     useEffect(() => {
        async function fetchData() {
+          const cartResponse = await axios.get(`https://6201422bfdf5090017249939.mockapi.io/cart`);
+          const favoritesResponse = await axios.get(`https://6201422bfdf5090017249939.mockapi.io/fovorites`);
           const itemsResponse = await axios.get(`https://6201422bfdf5090017249939.mockapi.io/items`);
-           axios.get(`https://6201422bfdf5090017249939.mockapi.io/cart`).then(res => {
-           });
-           axios.get(`https://6201422bfdf5090017249939.mockapi.io/fovorites`).then(res => {
-           });
-           setItems(res.data);
-           setCartItems(res.data);
-           setFavorites(res.data);
-       }
 
-    },[])
+           setCartItems(cartResponse.data);
+           setFavorites(favoritesResponse.data);
+           setItems(itemsResponse.data);
+       }
+       fetchData();
+       },[])
 
 
 
