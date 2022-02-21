@@ -1,6 +1,30 @@
   import Card from "../components/Card/Card";
+  import {useContext} from "react";
+  import AppContext from "../context";
 
- function Home ({items, cartItems, searchValue, setSearchValue, onChangeSearchInput, onAddFavorite, onAddToCard}) {
+ function Home ({items, cartItems, searchValue, setSearchValue, onChangeSearchInput, onAddFavorite, onAddToCard, isLoading}) {
+
+     const {isItemAdded} = useContext(AppContext);
+
+     const renderItems = () => {
+         const filteredItems =  items.filter(item =>
+             item.title.toLowerCase().includes(searchValue.toLowerCase())
+         );
+         return (isLoading ? [...Array(8)] : filteredItems).map((item, index) => (
+                         <Card
+                             key={index}
+                             onFavorite={(obj) => onAddFavorite(obj)}
+                             onPlus={(obj) => onAddToCard(obj)}
+                             added={isItemAdded(item && item.id)}
+                             loading={isLoading}
+                             {...item}
+
+                         />
+                     )
+                 )
+         }
+
+
      return (
          <div className="content p-40">
              <div className="d-flex align-center justify-between mb-40">
@@ -18,20 +42,7 @@
              </div>
 
              <div className="d-flex flex-wrap">
-
-              {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-                     .map((item, index) => (
-                            <Card
-                                 key={index}
-                                 onFavorite={(obj) => onAddFavorite(obj)}
-                                 onPlus={(obj) => onAddToCard(obj)}
-                                 added={cartItems.some(obj => Number( obj.id) === Number(item.id))}
-                                 {...item}
-
-                             />
-                        )
-                     )
-                 }
+                 {renderItems()}
              </div>
 
          </div>
