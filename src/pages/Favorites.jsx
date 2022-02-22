@@ -4,9 +4,9 @@
  import {useContext} from "react";
  import AppContext from "../context";
 
-  function Favorites ({onAddFavorite}) {
+  function Favorites () {
 
-       const {favorites} = useContext(AppContext);
+       const {favorites, onAddFavorite} = useContext(AppContext);
 
 
 

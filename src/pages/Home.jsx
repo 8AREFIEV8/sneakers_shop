@@ -1,10 +1,9 @@
   import Card from "../components/Card/Card";
-  import {useContext} from "react";
-  import AppContext from "../context";
 
- function Home ({items, cartItems, searchValue, setSearchValue, onChangeSearchInput, onAddFavorite, onAddToCard, isLoading}) {
 
-     const {isItemAdded} = useContext(AppContext);
+ function Home ({items, searchValue, setSearchValue, onChangeSearchInput, onAddFavorite, onAddToCard, isLoading}) {
+
+
 
      const renderItems = () => {
          const filteredItems =  items.filter(item =>
@@ -15,7 +14,6 @@
                              key={index}
                              onFavorite={(obj) => onAddFavorite(obj)}
                              onPlus={(obj) => onAddToCard(obj)}
-                             added={isItemAdded(item && item.id)}
                              loading={isLoading}
                              {...item}
 

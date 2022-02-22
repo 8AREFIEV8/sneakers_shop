@@ -156,6 +156,12 @@ body {
    .greenButton {
      position: relative;
 
+     &:disabled {
+       animation: button-loading 0.6s ease-in-out infinite;
+     }
+
+
+
      img {
        position: absolute;
        right: 30px;
@@ -177,6 +183,11 @@ body {
        font-weight: 500;
        cursor: pointer;
        transition: background 0.1s ease-in-out;
+
+     &:disabled {
+       background-color: #bebebe !important;
+       cursor: default;
+     }
    }
 
 
@@ -230,6 +241,22 @@ body {
    }
 
  }
+
+@keyframes button-loading {
+  0%{
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+
+
 
 
 
