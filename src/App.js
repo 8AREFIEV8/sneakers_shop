@@ -55,7 +55,7 @@ function App() {
        try {
            if (favorites.find(favObj => Number(favObj.id) === Number(obj.id))) {
                axios.delete(`https://6201422bfdf5090017249939.mockapi.io/fovorites/${obj.id}`);
-               setFavorites(prev => prev.filter(item => Number(item.id) !== Number(item.id)))
+               setFavorites(prev => prev.filter(item => Number(item.id) !== Number(obj.id)))
            }else {
                const {data} = await axios.post(`https://6201422bfdf5090017249939.mockapi.io/fovorites`, obj);
                setFavorites((prev) => [...prev, data]);
